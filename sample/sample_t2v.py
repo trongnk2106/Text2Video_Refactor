@@ -172,7 +172,7 @@ if __name__ == "__main__":
     # path:
     cache_dir = downloadmode_fromHuggingFace()
     ckpt = os.path.join(cache_dir, 't2v.pt')
-    save_img_path = './sample_output'
+    save_img_path = './sample_output/t2v'
     pretrained_model_path = os.path.join(cache_dir, 't2v_required_models')
 
     text_prompt= ['A dog in astronaut suit and sunglasses floating in space.',]
