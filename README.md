@@ -33,12 +33,24 @@ git clone https://github.com/maxin-cn/Latte.git
 cd Latte
 ```
 
+```bash
+pip install -r requirements.txt
+```
+
 We provide an [`environment.yml`](environment.yml) file that can be used to create a Conda environment. If you only want 
 to run pre-trained models locally on CPU, you can remove the `cudatoolkit` and `pytorch-cuda` requirements from the file.
 
 ```bash
 conda env create -f environment.yml
 conda activate latte
+```
+
+## Text to Video
+
+### You can modify Output path, prompt and another in [sample/sample_t2v.py](sample/sample_t2v.py)
+
+```
+bash sample/t2v.sh
 ```
 
 
