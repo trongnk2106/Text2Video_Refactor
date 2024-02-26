@@ -21,10 +21,16 @@ from models import get_models
 from utils import save_video_grid
 import imageio
 
+def downloadmode_fromHuggingFace():
+    from huggingface_hub import snapshot_download
+    cache_dir = './'
+    snapshot_download(repo_id="maxin-cn/Latte", local_dir=cache_dir)
+    return cache_dir
+
 def main( ckpt='', pretrained_model_path='', text_prompt=[], run_time=0, model = 'LatteT2V',
          save_img_path='', video_length = 16, image_size=[512, 512], beta_start = 0.0001, 
-         beta_end = 0.02, beta_schedule='linear', variance_type='learned_range', guidance_scale='7.5', 
-         sample_method='PNDM', num_sampling_steps='50', enable_temporal_attentions=True,
+         beta_end = 0.02, beta_schedule='linear', variance_type='learned_range', guidance_scale=7.5, 
+         sample_method='PNDM', num_sampling_steps=50, enable_temporal_attentions=True,
          enable_vae_temporal_decoder=False, use_compile=False, use_fp16 = True, seed=''):
     # torch.manual_seed(args.seed)
     torch.set_grad_enabled(False)
@@ -164,15 +170,16 @@ if __name__ == "__main__":
     # args = parser.parse_args()
 
     # path:
-    ckpt = ''
-    save_img_path = ''
-    pretrained_model_path = ''
+    cache_dir = downloadmode_fromHuggingFace()
+    ckpt = os.path.join(cache_dir, 't2v.pt')
+    save_img_path = './sample_output'
+    pretrained_model_path = os.path.join(cache_dir, 't2v_required_models')
 
     text_prompt= ['A dog in astronaut suit and sunglasses floating in space.',]
     main(ckpt=ckpt, pretrained_model_path=pretrained_model_path, text_prompt=text_prompt, save_img_path=save_img_path, run_time=0, model = 'LatteT2V',
          video_length = 16, image_size=[512, 512], beta_start = 0.0001, 
-         beta_end = 0.02, beta_schedule='linear', variance_type='learned_range', guidance_scale='7.5', 
-         sample_method='PNDM', num_sampling_steps='50', enable_temporal_attentions=True,
+         beta_end = 0.02, beta_schedule='linear', variance_type='learned_range', guidance_scale=7.5, 
+         sample_method='PNDM', num_sampling_steps=50, enable_temporal_attentions=True,
          enable_vae_temporal_decoder=False, use_compile=False, use_fp16 = True, seed='')
     # main(OmegaConf.load(args.config))
 
